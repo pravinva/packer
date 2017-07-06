@@ -5,6 +5,7 @@ import (
 	"io"
 	"os"
 	"os/exec"
+	"strings"
 	"syscall"
 
 	"github.com/hashicorp/packer/packer"
@@ -13,7 +14,10 @@ import (
 type Communicator struct{}
 
 func (c *Communicator) Start(cmd *packer.RemoteCmd) error {
-	localCmd := exec.Command("sh", "-c", cmd.Command)
+	splitcmd := strings.Split(cmd.Command, " ")
+	cmdName := splitcmd[0]
+	cmdArgs := strings.Join(splitcmd[1:], " ")
+	localCmd := exec.Command(cmdName, cmdArgs)
 	localCmd.Stdin = cmd.Stdin
 	localCmd.Stdout = cmd.Stdout
 	localCmd.Stderr = cmd.Stderr
