@@ -17,7 +17,7 @@
      * 386
      * amd64
      * arm
-
+     * environment
     If the environment variable PACKER_DEV is defined, then the OS and
     architecture of the go binary in the path is used.
 
@@ -47,7 +47,7 @@ $GIT_COMMIT = $(git.exe rev-parse HEAD)
 git.exe status --porcelain | Out-Null
 if ($LastExitCode -eq 0) {
     $GIT_DIRTY = "+CHANGES"
-} 
+}
 
 # If its dev mode, only build for ourself
 if (Test-Path env:PACKER_DEV) {
